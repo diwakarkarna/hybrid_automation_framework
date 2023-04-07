@@ -16,7 +16,7 @@ public class BaseClass {
     @Parameters({"Browser","Remote"})
     @BeforeTest
     public void Setup(String browser, String isRemote) throws MalformedURLException{
-        WebDriver driver = BrowserManager.createBrowserInstance(browser, isRemote);
+        driver = BrowserManager.createBrowserInstance(browser, isRemote);
         tlDriver.set(driver);
         System.out.println("Before test Thread ID: "+ Thread.currentThread().threadId());
         getDriver().manage().window().maximize();

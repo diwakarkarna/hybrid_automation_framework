@@ -29,16 +29,20 @@ public class BrowserManager {
 
     private static WebDriver getChromeDriver() {
         WebDriverManager.chromedriver().setup();
-        return new ChromeDriver();
+        //Specific code for Chrome 111 issue with websocket failure
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");
+        return new ChromeDriver(options);
     }
 
     private static WebDriver getChromeDriver(String remoteURL) throws MalformedURLException {
 
-        ChromeOptions chromeOptions = new ChromeOptions();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability(CapabilityType.BROWSER_NAME, "chrome");
-        caps.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-        return new RemoteWebDriver(URI.create(remoteURL).toURL(), caps);
+        caps.setCapability(ChromeOptions.CAPABILITY, options);
+        return new RemoteWebDriver(URI.create(remoteURL).toURL(), caps );
     }
 
     public static WebDriver createBrowserInstance(String browserName, String isRemote) throws MalformedURLException {
